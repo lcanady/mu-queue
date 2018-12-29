@@ -77,6 +77,7 @@ class Queue {
   constructor(name, options={}) {
     this.name = name.toLowerCase(),
     this.fail = options.fail || null,
+    this.success = options.success || null,
     this.interval = options.interval || null,
     this.data = options.data || {},
     this.queue = new Map()
@@ -104,6 +105,9 @@ class Queue {
     if (!results) {
       // if there's a callback and it's a function, fire it.
       if(this.fail && _.isFunction(this.fail)) this.fail(runData);
+    // If results returns true.
+    } else {
+      if(this.success && _.isFunction(this.success)) this.success(runData)
     }
   }
 }
