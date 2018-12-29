@@ -1,0 +1,21 @@
+{
+  "name": "muqueue",
+  "version": "0.1.0",
+  "description": "A simple event driven, managed queue system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "queue"
+  ],
+  "author": "Lemuel Canady, Jr",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
