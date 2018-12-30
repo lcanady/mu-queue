@@ -23,19 +23,21 @@ Jobs are functions that can optionally be passed a data parameter when it is exe
 ```JavaScript
 const q = require('muqueue');
 
-// Create the queue
-q.queue('basicQueue')
-
-// create a job to be run through.
+// create a job to be run through. This job accepts optional data.
 const Job = (data) => {
   console.log(data);
-  return true;
 }
 
-// Add the job to our queue
-q.add('basicQueue', 'testJob', job);
+// Add jobs to our system and create the queue 'basicQueue'.
+q.add('basicQueue', 'testJob', job)
+ .add('basicQueue', 'Job2', data => console.log('Job2', data));
 
-// Run the queue with data.
+// We can listen for success/failure events when queues run.
+q.on('success', (queue, job) => {
+  console.log(`Job ${job.name} Complete. Results: ${job.res || 'None'}`);
+});
+
+// Run the queue with optional data.
 q.exec('basicQueue', data);
 
 ```
@@ -45,7 +47,9 @@ Creating a queue with an interval works a bit differently.  First we require muq
 // Create the queue.  Iterval is set in miliseconds.
 q.queue('intervalQueue', {interval:4000});
 
-// -- create a job and add it to the queue as defined above
+// Add the job to the queue.
+q.add('intervalQueue', 'testJob', job);
+
 // Start the queue
 q.start('intervalQueue');
 

@@ -15,26 +15,14 @@ class QueueManager {
    * @param {function=} options.fail If the commands in the queue fail to
    * produce a truthy result, run a function if it fails.
    * @param {function=} options.success If the commands in the queue
-   * successfully complete, 
-   * @param {object=} options.data Optional paramater that can be passed through
-   * the queue.
+   * successfully complete.
    */
   queue(name, options={}){
-    const {interval, data, fail, success} = options;
-    const queue = new Queue(name, {data, fail, success});
+    const {interval, fail, success} = options;
+    const queue = new Queue(name, {interval, fail, success});
     this.queues.add(queue);
 
-    // if an interval was defined, create a new interval object and start the
-    // timer.
-    if (interval){
-      const intrvl = setInterval( () => {
-        const runData = _.isEmpty(data) ? {} : data;
-        queue.run(runData);
-      }, interval)
-
-      // add to the intervals Map
-      this.intervals.set(name, intrvl);
-    }
+    return queue;
   }
 
   /**
@@ -42,13 +30,45 @@ class QueueManager {
    * create a new instance of the queue and add the entry.
    * @param {string} queue The name of the queue object to add the options to.
    * @param {string} name A name to associate the queue action with.
-   * @param {function} func The action to take when the queue is called.
+   * @param {function} job The action to take when the queue is called.
    */
-  add(queue, name, func){
+  add(queue, name, job){
     if(!this.get(queue)){
       this.queue(queue);
     }
-    this.get(queue).queue.set(name, func);
+    this.get(queue).queue.set(name, job);
+    return this;
+  }
+
+  /**
+   * 
+   * @param {string} name 
+   * @param {*=} data Optional data passed to the queue when the interval
+   * starts. 
+   */
+  start(name, data=null) {
+    // Get information on the requested queue.
+    const queue = this.get(name);
+    const {interval} = queue;
+    const runData = _.isEmpty(data) ? {} : data;
+    // if an interval was defined, create a new interval object and 
+    // start the timer.
+    if (interval){
+      const intrvl = setInterval(() => queue.run(runData), interval);
+
+      // add to the intervals Map
+      this.intervals.set(name, intrvl);
+    }
+  }
+
+  /**
+   * Stop the queue from running on a timed repeat.
+   * @param {string} queue The name of the queue we want clear the interval
+   * from.
+   */
+  stop(queue) {
+    const interval = this.interval.get(queue);
+    clearInterval(interval);
   }
 
   /**
@@ -56,7 +76,6 @@ class QueueManager {
    * @param {string} queue The name of thet queue object to return 
    */
   get(queue) {
-    queue = queue.toLowerCase();
     for (const entry of this.queues.values()) {
       if(entry.name === queue) return entry;
     }
@@ -75,16 +94,15 @@ class QueueManager {
 
 class Queue {
   constructor(name, options={}) {
-    this.name = name.toLowerCase(),
+    this.name = name,
     this.fail = options.fail || null,
     this.success = options.success || null,
     this.interval = options.interval || null,
-    this.data = options.data || {},
     this.queue = new Map()
   }
 
-  add(name, func) {
-    this.queue.set(name,func);
+  add(name, job) {
+    this.queue.set(name, job);
     return this;
   }
 
@@ -114,3 +132,4 @@ class Queue {
 
 // create a singleton instance of the queue manager.
 module.exports = new QueueManager();
+module.exports.Queue = Queue;
