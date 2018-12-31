@@ -60,4 +60,5 @@ myQueue.start(data);
 // Stop the queue.
 myQueue.stop();
 ```
-
+## API
+<https://lcanady.github.io/muqueue/>
