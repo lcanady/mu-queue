@@ -17,6 +17,7 @@ The MuQueue system runs off of creating queues that hold jobs.  Jobs are execute
 ```JavaScript
 queue = require('muqueue');
 
+// Create a new queue and add a job.
 queue('testQueue').add('job1', (data) => {
   console.log(data);
   return = {
@@ -25,6 +26,17 @@ queue('testQueue').add('job1', (data) => {
   }
 })
 
+// Hook into a few events.
+queue('testQueue').on('queueComplete', (results) => {
+  console.log(`Queue succeess. Results: ${results}`);
+})
+
+queue('testQueue').on('queuefail', (results) => {
+  console.log(`Queue failure. Results: ${results}`);
+})
+
+// Run our queue with some data!
+queue('testQueue').run(data);
 ```
 ## API
 <https://lcanady.github.io/muqueue/>
