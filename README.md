@@ -24,6 +24,7 @@ queue('testQueue').add('job1', (data) => {
     msg: 'Job complete.'
   }
 })
+
 ```
 ## API
 <https://lcanady.github.io/muqueue/>
