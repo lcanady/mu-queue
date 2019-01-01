@@ -15,50 +15,15 @@ The MuQueue system runs off of creating queues that hold jobs.  Jobs are execute
 
 ### Basic Example
 ```JavaScript
-const {Queue, queueManager} = require('muqueue');
-let myQueue = new Queue();
+queue = require('muqueue');
 
-// Add a job to the queue.
-myQueue.add('myJob', (data) => {
+queue('testQueue').add('job1', (data) => {
   console.log(data);
   return = {
     res: true,
-    msg: 'Job Complete.'
+    msg: 'Job complete.'
   }
-});
-
-// Register the queue with the queueManager.
-queueManager.register('myQueue', myQueue);
-
-// Run the queue later.
-myQueue.run(data);
-
-// To retrieve your queue object later once it's been stored in the global
-// queueManager in a different module...
-myQueue = queueManager.get('myQueue');
-myQueue.run(data);
-```
-
-### Interval Queue Example
-Creating a queue that fires on an interval is just a little different.
-```JavaScript
-const {Queue} = require('muqueue');
-let myQueue = new Queue({interval:4000});
-
-// Add a job to the queue.
-myQueue.add('myJob', (data) => {
-  console.log(data);
-  return = {
-    res: true,
-    msg: 'Job Complete.'
-  }
-});
-
-// Start the queue.
-myQueue.start(data);
-
-// Stop the queue.
-myQueue.stop();
+})
 ```
 ## API
 <https://lcanady.github.io/muqueue/>
