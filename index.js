@@ -22,3 +22,4 @@ module.exports = (name, options={}) => {
     return queue;
   }
 }
+

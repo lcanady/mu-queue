@@ -306,7 +306,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line8">line 8</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -495,7 +495,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line45">line 45</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -551,7 +551,7 @@
     
 
     
-    <h4 class="name" id="exec"><span class="type-signature">(async) </span>exec<span class="signature">(name, data<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#results">results</a>}</span></h4>
+    <h4 class="name" id="exec"><span class="type-signature"></span>exec<span class="signature">(name, data<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#results">results</a>}</span></h4>
     
 
     
@@ -707,7 +707,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line81">line 81</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -721,17 +721,6 @@
 
 
 
-
-<h5>Fires:</h5>
-<ul>
-    <li><a href="Queue.html#event:jobSuccess">Queue#event:jobSuccess</a></li>
-
-    <li><a href="Queue.html#event:jobFail">Queue#event:jobFail</a></li>
-
-    <li><a href="Queue.html#event:queueComplete">Queue#event:queueComplete</a></li>
-
-    <li><a href="Queue.html#event:queueFail">Queue#event:queueFail</a></li>
-</ul>
 
 
 
@@ -774,7 +763,160 @@
     
 
     
-    <h4 class="name" id="run"><span class="type-signature">(async) </span>run<span class="signature">(data)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="job"><span class="type-signature"></span>job<span class="signature">(name)</span><span class="type-signature"> &rarr; {<a href="Job.html">Job</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Retrieve a job object.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the job to reference</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Job.html">Job</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">(data)</span><span class="type-signature"></span></h4>
     
 
     
@@ -883,7 +1025,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line155">line 155</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -897,6 +1039,13 @@
 
 
 
+
+<h5>Fires:</h5>
+<ul>
+    <li><a href="Queue.html#event:queueSuccess">Queue#event:queueSuccess</a></li>
+
+    <li><a href="Queue.html#event:queueFail">Queue#event:queueFail</a></li>
+</ul>
 
 
 
@@ -917,7 +1066,7 @@
     
 
     
-    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">(data)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">(data)</span><span class="type-signature"> &rarr; {<a href="Queue.html">Queue</a>}</span></h4>
     
 
     
@@ -1026,7 +1175,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line55">line 55</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -1049,6 +1198,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Queue.html">Queue</a></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1112,7 +1279,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line64">line 64</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -1147,463 +1314,6 @@
 
     
         <h3 class="subsection-title">Events</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="event:jobFail">jobFail</h4>
-    
-
-    
-
-
-
-<div class="description">
-    fail Event
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>results</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#results">results</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line128">line 128</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="event:jobSuccess">jobSuccess</h4>
-    
-
-    
-
-
-
-<div class="description">
-    Success Event
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>results</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#results">results</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line121">line 121</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="event:queueComplete">queueComplete</h4>
-    
-
-    
-
-
-
-<div class="description">
-    When all jobs are complete in the queue with at least one truthy result.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>results</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#RunResults">RunResults</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Results from the queue run.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line135">line 135</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
             
@@ -1712,7 +1422,142 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line141">line 141</a>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="event:queueSuccess">queueSuccess</h4>
+    
+
+    
+
+
+
+<div class="description">
+    When all jobs are complete in the queue with at least one truthy result.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RunResults">RunResults</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Results from the queue run.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_Queue.js.html">lib/Queue.js</a>, <a href="lib_Queue.js.html#line145">line 145</a>
     </li></ul></dd>
     
 
@@ -1752,13 +1597,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-queues.html">queues</a></li></ul><h3>Classes</h3><ul><li><a href="Queue.html">Queue</a></li></ul><h3>Events</h3><ul><li><a href="Queue.html#event:jobFail">jobFail</a></li><li><a href="Queue.html#event:jobSuccess">jobSuccess</a></li><li><a href="Queue.html#event:queueComplete">queueComplete</a></li><li><a href="Queue.html#event:queueFail">queueFail</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-queues.html">queues</a></li></ul><h3>Classes</h3><ul><li><a href="Job.html">Job</a></li><li><a href="Queue.html">Queue</a></li></ul><h3>Events</h3><ul><li><a href="Job.html#event:fail">fail</a></li><li><a href="Job.html#event:success">success</a></li><li><a href="Queue.html#event:queueFail">queueFail</a></li><li><a href="Queue.html#event:queueSuccess">queueSuccess</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 21:03:16 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 03 2019 22:33:05 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

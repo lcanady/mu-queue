@@ -44,3 +44,31 @@ queue('timeQueue', {interval: 4000}).add(data => {
   queue('timeQueue').start(data);
 });
 ```
+### Piping
+Jobs placed in a queue can be piped together. First we have to pass the queue constructor the piping flag, then we have to make sure that our jobs associated with the queue have a data property in their results.  It will be passed to the next job.
+
+```JavaScript
+const queue = require('mu-queue');
+
+// create the queue
+queue('test',{piping:true})
+  
+  // create a few jobs!
+  .add('job-1', (data) => {
+    const text = data + ' job-1';
+    return {
+      status: true,
+      data: text
+    }  
+  })
+  .add('job-2', (data) => {
+    const text = data + ' job-2';
+    return {
+      status: true,
+      data: text
+    }  
+  })
+  // Run our jobs!
+  .run('Foobar!');
+  // Returns: 'Foobar! Job-1 Job-2'
+```

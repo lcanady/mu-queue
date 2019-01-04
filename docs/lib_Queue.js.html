@@ -29,6 +29,8 @@
             <pre class="prettyprint source linenums"><code>const _ = require('lodash');
 const {EventEmitter} = require('events');
 
+const Job = require('./Job');
+
 /** 
  * Create a new Queue object.
  * @extends EventEmitter
@@ -59,6 +61,7 @@ class Queue extends EventEmitter {
     this.interval = options.interval || null;
     this.jobs = new Map();
     this.results = {};
+    this.piping = options.piping || false;
   }
 
   /**
@@ -71,14 +74,27 @@ class Queue extends EventEmitter {
    * @return {Queue} Returns the current instance of the queue object.
    */
   add(name, job) {
-    this.jobs.set(name, job);
+    const entry = new Job({name, action:job});
+    this.jobs.set(name, entry);
     return this;
+  }
+
+  /**
+   * Retrieve a job object.
+   * @param {string} name Name of the job to reference
+   * 
+   * @return {Job}
+   */
+  job(name) {
+    return this.jobs.get(name);
   }
 
   /**
    * Start a queue that has an `interval` property set in milliseconds.
    * @param {*} data Optional data param passed to the jobs in the queue
    * when they run.
+   * 
+   * @return {Queue}
    */
   start(data=null) {
     if(this.interval &amp;&amp; _.isNumber(this.interval)) {
@@ -99,20 +115,14 @@ class Queue extends EventEmitter {
    * @param {string} name The name of the job to run.
    * @param {*=} data Optional data passed to the job on execution.
    * 
-   * @fires Queue#jobSuccess
-   * @fires Queue#jobFail
-   * @fires Queue#queueComplete
-   * @fires Queue#queueFail
-   * 
    * @return {results} Returns a results object.
    */
-  async exec(name, data=null){
-    const job = this.jobs.get(name);
+   exec(name, data=null){
     let results = {};
     
     // If the job is found, run it.
-    if (job) {
-      results = await job(data);
+    if (this.job(name)) {
+      results = this.job(name).run(data);
       
       // check to make sure an object is returned, if not, format the
       // response into results object format.
@@ -121,26 +131,26 @@ class Queue extends EventEmitter {
         // object check it for the `res` property. Format to a 
         // correct response object if needed. 
         case (results &amp;&amp; !_.isObject(results)) || 
-          (_.isObject(results) &amp;&amp; !results.hasOwnProperty('res')) :
-          results = {res: results};
+          (_.isObject(results) &amp;&amp; !results.hasOwnProperty('status')) :
+          results = {
+            status: results,
+            msg: 'None',
+            data: results
+          };
           break;
         // If there's no truthy result, create a failing results
         // object.
         case !results:
-          results = {res: false};
+          results = {
+            status: false, 
+            msg: 'None.'
+          };
           break;
       }
 
     // Else return a failing results object.
     } else {
-      results = {res: false, msg: 'Job not found.'};
-    }
-
-    // fire completed job events
-    if(results.res) {
-      this.emit('jobSuccess', name, results);
-    } else {
-      this.emit('jobFail', name, results);
+      results = {status: false, msg: 'Job not found.'};
     }
 
     return results;
@@ -148,21 +158,21 @@ class Queue extends EventEmitter {
 
   /**
    * Success Event
-   * @event Queue#jobSuccess
+   * @event Job#success
    * @property {string} name 
    * @property {results} results  
    */
 
    /**
    * fail Event
-   * @event Queue#jobFail
+   * @event Job#fail
    * @property {string} name 
    * @property {results} results  
    */
 
   /**
    * When all jobs are complete in the queue with at least one truthy result.
-   * @event Queue#queueComplete
+   * @event Queue#queueSuccess
    * @param {RunResults} results Results from the queue run. 
    */
 
@@ -179,18 +189,34 @@ class Queue extends EventEmitter {
    * queue object. If `firstRes` is selected and no result returns truthy
    * the optional 'fail' method on the queue object is fired.
    * @param {*} data Optional data that can be fed to the jobs in the queue.
+   * 
+   * @fires Queue#queueSuccess
+   * @fires Queue#queueFail
+
    */
-  async run(data=null) {
+  run(data=null) {
+    this.results = {
+      jobs:[]
+    }
     let results = {};
-    this.results = {};
-    this.results.data = data;
+    let workingData = data;
 
     for (const job of this.jobs.keys()) {
-      results = await this.exec(job, data);
-      this.results[job] = results;
+      results =  this.exec(job, workingData);
 
-      if (this.firstRes &amp;&amp; results.res){
-        this.emit('queueComplete', this.results);      
+      // check for piping. If piping feed the value of workingData into the
+      // next exec call, else start with a fresh copy of data.
+      if(!this.piping) {
+        workingData = data;
+      } else {
+        workingData = results.data ? results.data : data;
+      }
+
+      this.results.jobs.push(results);
+      this.results.data = workingData;
+
+      if (this.firstRes &amp;&amp; results.status){
+        this.emit('queueSuccess', this.results);      
       }
     }
 
@@ -205,26 +231,27 @@ class Queue extends EventEmitter {
     }
 
     if (res) {
-      this.emit('queueComplete', this.results);
+      this.emit('queueSuccess', this.results);
     } else {
       this.emit('queueFail', this.results);
     }
+    return this.results
   }
+
 }
-
-
 
 /**
  * @typedef {object} results The results object
- * @property {boolean} res Was the job successful or not?
+ * @property {boolean} status Was the job successful or not?
  * @property {string=} msg Optional extra information about the job run.
+ * @property {*=} data Optional data.
  */
 
  /**
   * @typedef {object} RunResults
   * @property {object} job The name of the job matching the desired results
-  * @property {object} results The job results object.
-  * @property {results} results.job Results per job
+  * @property {results} job.results The job results object.
+  * @property {*=} data Optional data.
   */
 
 module.exports = Queue;</code></pre>
@@ -237,13 +264,13 @@ module.exports = Queue;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-queues.html">queues</a></li></ul><h3>Classes</h3><ul><li><a href="Queue.html">Queue</a></li></ul><h3>Events</h3><ul><li><a href="Queue.html#event:jobFail">jobFail</a></li><li><a href="Queue.html#event:jobSuccess">jobSuccess</a></li><li><a href="Queue.html#event:queueComplete">queueComplete</a></li><li><a href="Queue.html#event:queueFail">queueFail</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-queues.html">queues</a></li></ul><h3>Classes</h3><ul><li><a href="Job.html">Job</a></li><li><a href="Queue.html">Queue</a></li></ul><h3>Events</h3><ul><li><a href="Job.html#event:fail">fail</a></li><li><a href="Job.html#event:success">success</a></li><li><a href="Queue.html#event:queueFail">queueFail</a></li><li><a href="Queue.html#event:queueSuccess">queueSuccess</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 02 2019 21:03:16 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 03 2019 22:33:05 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
