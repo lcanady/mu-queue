@@ -1,6 +1,6 @@
 {
   "name": "mu-queue",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "A simple event driven, managed queue system.",
   "main": "index.js",
   "scripts": {
