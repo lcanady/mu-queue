@@ -3,7 +3,7 @@ const Manager = require('mu-manager');
 const manager = new Manager();
 
 /**
- * @module queues
+ * @module queue
  */
 /**
  * Retrieve a queue, or create a new one if it doesn't exist.
@@ -22,4 +22,3 @@ module.exports = (name, options={}) => {
     return queue;
   }
 }
-
