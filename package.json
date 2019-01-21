@@ -11,6 +11,10 @@
   ],
   "author": "Lemuel Canady, Jr",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcanady/mu-queue.git"
+  },
   "dependencies": {
     "lodash": "^4.17.11",
     "mu-manager": "github:lcanady/mu-manager"
